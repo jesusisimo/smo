@@ -1,0 +1,83 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>PAAO Cancun 2019</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+
+
+<ion-content text-center class="icons-basic-page">
+	<img src="/assets/img/banner.jpg"/>
+	<ion-row>
+		<ion-col>
+			<ion-icon name="clock" color="light" (click)="navegarPagina('programa')"></ion-icon>
+			<p color="light">Programa General</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="search" color="light" (click)="navegarPagina('buscador')"></ion-icon>
+			<p color="light">Buscador</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="map" color="light"  (click)="navegarPagina('esquema')"></ion-icon>
+			<p color="light">Esquema General</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="easel" color="light" (click)="navegarPagina('carteles')"></ion-icon>
+			<p color="light">Carteles</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="play" color="light" (click)="navegarPagina('videos')"></ion-icon>
+			<p color="light">Videos</p>
+		</ion-col>
+		<ion-col>
+			<ion-buttons (click)="navegarPagina('actividades')">
+				<img  src="/assets/icon/smo.png" >
+			</ion-buttons>
+			<p color="light">Actividades SMO</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="people" color="light" (click)="navegarPagina('ponentes')"></ion-icon>
+			<p color="light">Ponentes</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="megaphone" color="light" (click)="navegarPagina('bienvenida')"></ion-icon>
+			<p color="light">Mensaje de Bienvenida</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="globe" color="light" (click)="abrirWeb('http://gruporoyale.net/shop/home.php?lang=1&event=89&zona=1','system')"></ion-icon>
+			<p color="light">Lugares de interes</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="flask" color="light" (click)="navegarPagina('expocomercial')" ></ion-icon>
+			<p color="light">Exposición Comercial</p>
+		</ion-col>
+
+		<ion-col>
+			<ion-icon name="ribbon" color="light" (click)="navegarPagina('patrocinadores')" ></ion-icon>
+			<p color="light">Patrocinadores</p>
+		</ion-col>
+
+		<ion-col>
+			<ion-icon name="bus" color="light" (click)="navegarPagina('circuito')"></ion-icon>
+			<p color="light">Circuito de Autobuses</p>
+		</ion-col>
+
+		<ion-col>
+			<ion-icon name="calendar" color="light" (click)="navegarPagina('agenda')"></ion-icon>
+			<p color="light">Mi Agenda</p>
+		</ion-col>
+		<ion-col>
+			<ion-icon name="contacts" color="light" (click)="navegarPagina('congresistas')"></ion-icon>
+			<p color="light">Congresistas</p>
+		</ion-col>
+
+
+
+
+
+
+
+	</ion-row>
+
+
+</ion-content>
