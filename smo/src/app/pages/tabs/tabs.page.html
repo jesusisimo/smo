@@ -1,14 +1,14 @@
 <ion-tabs>
-    <ion-toolbar class="publicidad">
-        <ion-slides pager="false" [options]="slideOpts">
-          <ion-slide>
-            <img src="/assets/img/banner_patrocinador.png" alt="">
-          </ion-slide>
-          <ion-slide>
-            <img src="/assets/img/banner_patrocinador2.png" alt="">
-          </ion-slide>
-        </ion-slides>
-      </ion-toolbar>
+  <ion-toolbar class="publicidad">
+    <ion-slides pager="false" [options]="slideOpts">
+      <ion-slide>
+        <img src="/assets/img/banner_patrocinador.png" alt="">
+      </ion-slide>
+      <ion-slide>
+        <img src="/assets/img/banner_patrocinador2.png" alt="" (click)="abrirWeb('https://www.alcon.mx')">
+      </ion-slide>
+    </ion-slides>
+  </ion-toolbar>
   <ion-tab-bar slot="bottom" color="secondary">
     <ion-tab-button tab="notificaciones">
       <ion-icon name="notifications"></ion-icon>

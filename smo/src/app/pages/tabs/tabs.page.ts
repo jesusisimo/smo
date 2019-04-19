@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -12,5 +12,11 @@ export class TabsPage {
     speed: 700,
     autoplay:true,
 		loop:true
-	  };
+    };
+  constructor(private iab: InAppBrowser){
+
+  }
+  abrirWeb(url:string){
+    const browser = this.iab.create(url,'_system');
+  }
 }
