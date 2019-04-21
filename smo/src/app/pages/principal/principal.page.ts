@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-principal',
@@ -7,7 +8,10 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage {
-	constructor(public navCtrl: NavController) {
+	constructor(
+		public navCtrl: NavController,
+		private iab: InAppBrowser
+		) {
 
   }
 
@@ -18,14 +22,9 @@ export class PrincipalPage {
 	}
 
 
-	// abrirWeb(url:string, target:string){
-	// 	if(target=="_system") {
-	// 		this.visitar_pagina(url);
-	// 	}else{
-	// 		this.navCtrl.push(WebPage, {'url':url});
-	// 	}
-		
-	// }
+	abrirWeb(url:string, target:string){
+		this.iab.create(url, target);
+	}
 
 
 }

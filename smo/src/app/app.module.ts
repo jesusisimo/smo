@@ -12,15 +12,17 @@ import { CartelComponent } from './components/cartel/cartel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Network } from '@ionic-native/network/ngx';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
-  declarations: [AppComponent,CartelComponent],
+  declarations: [AppComponent, CartelComponent],
   entryComponents: [CartelComponent],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
-    HttpClientModule
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,
@@ -31,4 +33,4 @@ import { Network } from '@ionic-native/network/ngx';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

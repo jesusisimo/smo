@@ -1,9 +1,9 @@
-export interface RespuestaCDB {
+export interface InterfaceCarteles {
   error: boolean;
-  carteles: Cartel[];
+  resultados: ICartel[];
 }
 
-export interface Cartel {
+export interface ICartel {
   id: string;
   clave: string;
   titulo: string;
@@ -11,4 +11,5 @@ export interface Cartel {
   autores: string;
   especialidad: string;
   color: string;
+  url: string;
 }

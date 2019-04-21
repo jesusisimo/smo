@@ -4,30 +4,32 @@ import { URL_SERVICIOS } from "../config/url.servicios";
 import { AjustesService } from './ajustes.service';
 import { DatosService } from './datos.service';
 import 'rxjs/add/operator/map';
-import { InterfaceCarteles, ICartel } from '../interfaces/carteles';
+import { InterfaceVideos, IVideo } from '../interfaces/videos';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartelesService {
+export class VideosService {
+
   constructor(
     private http: HttpClient,
     private _as: AjustesService,
     private _ds: DatosService,
   ) { }
+
   pagina: number = 0;
-  carteles: ICartel[];
+  videos: IVideo[];
 
   getDetalles(id: string) {
     if (!this._as.online) {
       return false;
     }
     this._as.presentLoading("Cargando...");
-    let url = URL_SERVICIOS + "/cartel.php?id=" + id
-    let promesa = this.http.get<InterfaceCarteles>(url)
+    let url = URL_SERVICIOS + "/videos.php?id=" + id
+    let promesa = this.http.get<InterfaceVideos>(url)
       .toPromise()
       .then(data => {
-        this.carteles = data.resultados;
+        this.videos = data.resultados;
         this._as.loading.dismiss();
         return data;
       })
@@ -40,10 +42,10 @@ export class CartelesService {
 
   cargar_todos() {
     if (!this._as.online) {
-      let promise =  this._ds.getCarteles()
+      let promise = this._ds.getVideos()
         .then(
           data => {
-            this.carteles = data;
+            this.videos = data;
             this.pagina = 100;
             this._as.loading.dismiss();
             return data;
@@ -51,11 +53,11 @@ export class CartelesService {
         );
     } else {
       this._as.presentLoading("Cargando...");
-      let url = URL_SERVICIOS + "/carteles.php?todos&pagina=" + this.pagina;
-      let promesa = this.http.get<InterfaceCarteles>(url)
+      let url = URL_SERVICIOS + "/videos.php?todos&pagina=" + this.pagina;
+      let promesa = this.http.get<InterfaceVideos>(url)
         .toPromise()
         .then(data => {
-          this.carteles = data.resultados;
+          this.videos = data.resultados;
           this.pagina = this.pagina += 1;
           this._as.loading.dismiss();
           return data;
@@ -74,12 +76,12 @@ export class CartelesService {
     if (!this._as.online) {
       return false;
     }
-    let url = URL_SERVICIOS + "/carteles.php?todos&pagina=" + this.pagina;
-    let promesa = await this.http.get<InterfaceCarteles>(url)
+    let url = URL_SERVICIOS + "/videos.php?todos&pagina=" + this.pagina;
+    let promesa = await this.http.get<InterfaceVideos>(url)
       .toPromise()
       .then(data => {
         if (data.resultados.length > 0) {
-          this.carteles.push(...data.resultados);
+          this.videos.push(...data.resultados);
           this.pagina = this.pagina += 1;
         } else {
           this._as.presentToast("No hay mas información");
@@ -96,29 +98,29 @@ export class CartelesService {
 
   async buscar(variable: string) {
     if (!this._as.online) {
-      variable=variable.toUpperCase();
-      let promise = await this._ds.getCarteles()
+      variable = variable.toUpperCase();
+      let promise = await this._ds.getVideos()
         .then(
           data => {
-            this.carteles=[];
-            let list: ICartel[]=[];
+            this.videos = [];
+            let list: IVideo[] = [];
             list = data;
             list.forEach(
-              cartel => {
-                if(cartel.titulo.toUpperCase().indexOf(variable)>=0 || cartel.especialidad.toUpperCase().indexOf(variable)>=0 || cartel.autores.toUpperCase().indexOf(variable)>=0){
-                  this.carteles.push(cartel);
+              video => {
+                if (video.titulo.toUpperCase().indexOf(variable) >= 0 || video.especialidad.toUpperCase().indexOf(variable) >= 0 || video.autores.toUpperCase().indexOf(variable) >= 0) {
+                  this.videos.push(video);
                 }
-            });
+              });
             return promise;
           }
         );
     } else {
-      let url = URL_SERVICIOS + "/carteles.php?search=" + variable;
-      let promesa = await this.http.get<InterfaceCarteles>(url)
+      let url = URL_SERVICIOS + "/videos.php?search=" + variable;
+      let promesa = await this.http.get<InterfaceVideos>(url)
         .toPromise()
         .then(data => {
-          this.carteles = null;
-          this.carteles = data.resultados;
+          this.videos = null;
+          this.videos = data.resultados;
           this.pagina = 1;
           return promesa;
         })
@@ -138,12 +140,12 @@ export class CartelesService {
     } else {
       this.pagina = 0;
       this._as.presentLoading("Recargando...");
-      let url = URL_SERVICIOS + "/carteles.php?todos&pagina=" + this.pagina + "&search=" + variable;
-      let promesa = await this.http.get<InterfaceCarteles>(url)
+      let url = URL_SERVICIOS + "/videos.php?todos&pagina=" + this.pagina + "&search=" + variable;
+      let promesa = await this.http.get<InterfaceVideos>(url)
         .toPromise()
         .then(data => {
           if (data.resultados.length > 0) {
-            this.carteles = data.resultados;
+            this.videos = data.resultados;
             this.pagina = 1;
           } else {
             this._as.presentToast("No hay mas información");
@@ -158,10 +160,4 @@ export class CartelesService {
       return promesa;
     }
   }
-
-
-
-
-
-
 }

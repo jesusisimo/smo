@@ -10,7 +10,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class CartelesPage implements OnInit {
   variable: string = "";
-  loading: any;
   constructor(
     public modalCtrl: ModalController,
     private _cs: CartelesService,
@@ -34,9 +33,9 @@ export class CartelesPage implements OnInit {
   //   modal.present();
   // }
 
-  detalles(codigo: string) {
-    let url = 'https://www.servimed.com.mx/carteles.php?' + codigo;
-    const browser = this.iab.create(url, '_system');
+  detalles(url: string) {
+    let link = url;
+    this.iab.create(link, '_system');
   }
 
   buscar(texto: any) {
