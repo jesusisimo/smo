@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { AjustesService } from './ajustes.service';
 import { InterfaceCarteles, ICartel } from '../interfaces/carteles';
 import { InterfaceVideos, IVideo } from '../interfaces/videos';
+import { IPatrocinador } from '../interfaces/patrocinadores';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { InterfaceVideos, IVideo } from '../interfaces/videos';
 export class DatosService {
   carteles: ICartel[];
   videos: IVideo[];
+  patrocinadores: IPatrocinador[];
   constructor(
     private storage: Storage,
     private http: HttpClient,
@@ -33,9 +35,15 @@ export class DatosService {
         }
       });
 
+      this.storage.get('patrocinadores').then((valores) => {
+        if (!valores) {
+          this.guardarPatrocinadores();
+        }
+      });
+
     }
   }
-
+//CARTELES
   guardarCarteles() {
     let url = URL_SERVICIOS + "/carteles.php?getall";
     let promesa = this.http.get<InterfaceCarteles>(url)
@@ -61,7 +69,7 @@ export class DatosService {
     return promesa;
   }
 
-
+  //VIDEOS
   guardarVideos() {
     let url = URL_SERVICIOS + "/videos.php?getall";
     let promesa = this.http.get<InterfaceVideos>(url)
@@ -86,7 +94,30 @@ export class DatosService {
     });
     return promesa;
   }
+//PATROCINADORES
+guardarPatrocinadores() {
+  let url = URL_SERVICIOS + "/patrocinadores.php?getall";
+  let promesa = this.http.get<InterfaceVideos>(url)
+    .toPromise()
+    .then(data => {
+      if (data.resultados.length > 0) {
+        this.storage.set('patrocinadores', data.resultados);
+        this._as.presentToast("Patrocinadores guardados en dispositivo");
+      }
+      return promesa;
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+  return promesa;
+}
 
-
+async getPatrocinadores() {
+  let promesa = await this.storage.get('patrocinadores').then((valores) => {
+    this.patrocinadores = valores;
+    return valores;
+  });
+  return promesa;
+}
 
 }

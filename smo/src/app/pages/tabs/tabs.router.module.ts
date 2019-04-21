@@ -28,6 +28,10 @@ const routes: Routes = [
       loadChildren: '../programa/programa.module#ProgramaPageModule'
     },
     {
+      path: 'buscador',
+      loadChildren: '../buscador/buscador.module#BuscadorPageModule'
+    },
+    {
       path: 'esquema',
       loadChildren: '../esquema/esquema.module#EsquemaPageModule'
     },

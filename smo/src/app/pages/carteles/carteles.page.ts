@@ -34,8 +34,7 @@ export class CartelesPage implements OnInit {
   // }
 
   detalles(url: string) {
-    let link = url;
-    this.iab.create(link, '_system');
+    this.iab.create(url, '_system');
   }
 
   buscar(texto: any) {

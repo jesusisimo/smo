@@ -1,9 +1,57 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>patrocinadores</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="light" text="Atras"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Patrocinadores</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary" class="buscadores">
+    <ion-searchbar class="buscador" debounce="550" animated placeholder="Buscar patrocinador..."
+      (ionChange)="buscar($event)" color="light" showCancelButton cancelButtonText="OK"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content ion-padding="ion-padding">
+  <ion-refresher [disabled]="refrescando" (ionRefresh)="recargar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-list>
+    <ion-item ion-item *ngFor="let patrocinador of _ps.patrocinadores">
+      
+        <!-- <ion-card color="light">
+            <img ion-padding src="{{ patrocinador.logo }}">
+            <ion-card-header>
+              <ion-card-title text-center>{{ patrocinador.patrocinador }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content text-justify>
+                {{ patrocinador.descripcion }}
+            </ion-card-content>
+          </ion-card> -->
+          
+
+          <ion-card color="light">
+              <img src="{{ patrocinador.logo }}">
+              <ion-item>
+                <ion-card-title>{{ patrocinador.patrocinador }}</ion-card-title>
+                <ion-button  slot="end" color="primary" (click)="abrirWeb(patrocinador.pagina)">
+                    <ion-icon name="link" slot="start"></ion-icon>
+                    Visitar página
+                </ion-button>
+              </ion-item>
+            
+              <ion-card-content text-justify>
+                  {{ patrocinador.descripcion }}
+              </ion-card-content>
+            </ion-card>
+    </ion-item>
+
+
+  </ion-list>
+  <ion-infinite-scroll [disabled]="scrolling" (ionInfinite)="siguiente_pagina($event)">
+    <ion-infinite-scroll-content loadingText="Cargando mas información…"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 
 </ion-content>
