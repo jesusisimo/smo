@@ -1,9 +1,29 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>expocomercial</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="light" text="Atras"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Expo Comercial</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+  <ion-card (click)="viewPhoto('comercial.jpg')">
+
+      <ion-card-header>
+        <ion-card-subtitle>Expo comercial</ion-card-subtitle>
+      </ion-card-header>
+      <img src="/assets/img/comercial.jpg" alt="">
+    </ion-card>
+
+    <ion-card (click)="viewPhoto('salones.jpg')">
+      <ion-card-header>
+        <ion-card-subtitle>Salones</ion-card-subtitle>
+      </ion-card-header>
+      <img src="/assets/img/salones.jpg" alt="">
+    </ion-card>
+
 
 </ion-content>

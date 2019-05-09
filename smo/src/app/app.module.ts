@@ -14,6 +14,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
     SplashScreen,
     InAppBrowser,
     DocumentViewer,
+    PhotoViewer,
+    File,
     Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
