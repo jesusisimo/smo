@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+
 
 @NgModule({
   declarations: [AppComponent, CartelComponent],
@@ -28,6 +30,7 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     InAppBrowser,
+    DocumentViewer,
     Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { DatosService } from '../../services/datos.service';
 
 @Component({
   selector: 'app-agenda',
@@ -6,10 +8,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
-
-  constructor() { }
+favoritos:IActividad[]=[];
+  constructor(private _ds:DatosService,
+    public navCtrl: NavController) { }
 
   ngOnInit() {
+    this.getFavoritos();
   }
 
+  
+  getFavoritos(){
+    let promise = this._ds.getFavoritos()
+        .then(
+          data => {
+            console.log("",data);
+            this.favoritos = this._ds.favoritos;
+            return data;
+          }
+        );
+  }
+  verDetalles(id: any){
+    this.navCtrl.navigateForward(`/tabs/principal/programa/actividad/${id}`);
+	}
+
+  ionViewWillEnter(){
+    this.getFavoritos();
+  }
 }

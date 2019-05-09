@@ -17,7 +17,7 @@
   </ion-refresher>
     <ion-list>
         <ion-item *ngFor="let video of _vs.videos"  color="{{video.color}}" (click)="detalles(video.url)"  href="javascript:;">
-          <ion-label>
+          <ion-label style="white-space: normal;">
             <p>{{video.id}}.- {{ video.titulo }}</p>
            
             <h3>A. {{ video.autores }}</h3>

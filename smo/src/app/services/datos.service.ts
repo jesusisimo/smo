@@ -13,7 +13,10 @@ import { IPatrocinador } from '../interfaces/patrocinadores';
 })
 export class DatosService {
   carteles: ICartel[];
+  actividad: IActividad[] = [];
+  is_favorito = "ligth";
   videos: IVideo[];
+  favoritos: IActividad[] = [];
   patrocinadores: IPatrocinador[];
   constructor(
     private storage: Storage,
@@ -43,7 +46,7 @@ export class DatosService {
 
     }
   }
-//CARTELES
+  //CARTELES
   guardarCarteles() {
     let url = URL_SERVICIOS + "/carteles.php?getall";
     let promesa = this.http.get<InterfaceCarteles>(url)
@@ -94,30 +97,95 @@ export class DatosService {
     });
     return promesa;
   }
-//PATROCINADORES
-guardarPatrocinadores() {
-  let url = URL_SERVICIOS + "/patrocinadores.php?getall";
-  let promesa = this.http.get<InterfaceVideos>(url)
-    .toPromise()
-    .then(data => {
-      if (data.resultados.length > 0) {
-        this.storage.set('patrocinadores', data.resultados);
-        this._as.presentToast("Patrocinadores guardados en dispositivo");
-      }
-      return promesa;
-    })
-    .catch(error => {
-      return Promise.reject(error);
-    });
-  return promesa;
-}
 
-async getPatrocinadores() {
-  let promesa = await this.storage.get('patrocinadores').then((valores) => {
-    this.patrocinadores = valores;
-    return valores;
-  });
-  return promesa;
-}
+  async getFavoritos() {
+    let promesa = await this.storage.get('favoritos').then((valores) => {
+      this.favoritos = valores;
+      return promesa;
+    });
+    return promesa;
+  }
+
+
+  //PATROCINADORES
+  guardarPatrocinadores() {
+    let url = URL_SERVICIOS + "/patrocinadores.php?getall";
+    let promesa = this.http.get<InterfaceVideos>(url)
+      .toPromise()
+      .then(data => {
+        if (data.resultados.length > 0) {
+          this.storage.set('patrocinadores', data.resultados);
+          this._as.presentToast("Patrocinadores guardados en dispositivo");
+        }
+        return promesa;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+    return promesa;
+  }
+
+  async getPatrocinadores() {
+    let promesa = await this.storage.get('patrocinadores').then((valores) => {
+      this.patrocinadores = valores;
+      return valores;
+    });
+    return promesa;
+  }
+
+  //PATROCINADORES
+  guardarFavorito(favorito: IActividad) {
+    let existe = false;
+    let mensaje = "";
+   let promesa = this.storage.get('favoritos').then((valores) => {
+      if (valores) {
+        this.favoritos = valores;
+
+        for (const act of this.favoritos) {
+          if (act.id == favorito.id) {
+            existe = true;
+            break;
+          }
+        }
+      }
+      if (existe) {
+        this.favoritos = this.favoritos.filter(act => act.id !== favorito.id);
+        mensaje = "Borrado de favoritos";
+        this.is_favorito = "ligth";
+      } else {
+        this.favoritos.push(favorito);
+        console.log("push");
+        this.is_favorito = "danger";
+        mensaje = "Agregado a favoritos";
+      }
+
+      this.storage.set('favoritos', this.favoritos);
+      this._as.presentToast(mensaje);
+      return promesa;
+    });
+    return promesa;
+  }
+
+
+
+
+  isFavorito(id: any) {
+    let existe = false;
+    let mensaje = "";
+    this.storage.get('favoritos').then((valores) => {
+      for (const act of valores) {
+        if (act.id == id) {
+          existe = true;
+          break;
+        }
+      }
+      if (existe) {
+        this.is_favorito = "danger";
+      } else {
+        this.is_favorito = "ligth";
+      }
+    });
+
+  }
 
 }

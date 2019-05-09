@@ -31,7 +31,7 @@
           <ion-list-header>
             {{ dia.dia }}
           </ion-list-header>
-          <ion-item *ngFor="let actividad of dia.actividades" href="javascript:;">
+          <ion-item *ngFor="let actividad of dia.actividades" href="javascript:;" (click)="verDetalles(actividad.id)">
             <ion-label style="white-space: normal;">
               <p>
                 <!-- {{actividad.clave}} -->

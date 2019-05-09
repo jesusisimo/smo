@@ -25,7 +25,16 @@ const routes: Routes = [
     },
     {
       path: 'programa',
-      loadChildren: '../programa/programa.module#ProgramaPageModule'
+      children: [
+        {
+          path: '',
+          loadChildren: '../programa/programa.module#ProgramaPageModule'
+        },
+        {
+          path: 'actividad/:id',
+          loadChildren: '../actividad/actividad.module#ActividadPageModule'
+        },
+      ]
     },
     {
       path: 'buscador',
