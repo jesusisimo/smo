@@ -4,7 +4,7 @@
         <ion-menu-button></ion-menu-button>
         <ion-back-button color="light" text="Atras"></ion-back-button>
       </ion-buttons>
-      <ion-title>Favoritos</ion-title>
+      <ion-title>Mi agenda</ion-title>
     </ion-toolbar>
   </ion-header>
   
@@ -13,7 +13,7 @@
   
       <ion-list>
           <ion-list-header>
-            Favoritos
+            Actividades marcadas como favoritos
           </ion-list-header>
           <ion-item *ngFor="let actividad of favoritos" href="javascript:;" (click)="verDetalles(actividad.id)">
             <ion-label style="white-space: normal;">

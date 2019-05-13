@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {  BuscadorService } from 'src/app/services/buscador.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-buscador',
@@ -6,10 +9,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buscador.page.scss'],
 })
 export class BuscadorPage implements OnInit {
-
-  constructor() { }
+  variable:string;
+  constructor( 
+    private _bs: BuscadorService,
+    private iab: InAppBrowser,
+    private navCtrl:NavController
+    ) { 
+    this.variable="";
+    this._bs.tipo_actual="1";
+    this._bs.tipos=[];
+  }
 
   ngOnInit() {
   }
+   buscar(texto: any) {
+    this._bs.tipos=[];
+    this.variable = texto.target.value;
+    if(this.variable.length>3){
+      this._bs.buscar(this.variable);
+    }
+  }
 
+  detalles(resultado:IResultado){
+    if(resultado.clase=="video" || resultado.clase=="cartel" ){
+      this.iab.create(resultado.extra, '_system');
+    }else{
+      this.navCtrl.navigateForward(`/tabs/principal/programa/actividad/${resultado.id}`);
+    }
+  }
 }

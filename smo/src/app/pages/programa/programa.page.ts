@@ -23,13 +23,18 @@ export class ProgramaPage implements OnInit {
     this._as.pagina = 0;
     this._as.dias = [];
     this._as.cargar_todos().then(
-      result => console.log("Ya hay datos",result)
+      result => console.log("Ok")
     );
   }
 
   verDetalles(id: any){
     this.navCtrl.navigateForward(`/tabs/principal/programa/actividad/${id}`);
 	}
+
+  buscar(texto: any) {
+    this.variable = texto.target.value;
+    this._as.buscar(this.variable);
+  }
 
  
 

@@ -18,6 +18,7 @@ export class DatosService {
   videos: IVideo[];
   favoritos: IActividad[] = [];
   patrocinadores: IPatrocinador[];
+  actividades: InterfaceActividades[];
   constructor(
     private storage: Storage,
     private http: HttpClient,
@@ -26,23 +27,33 @@ export class DatosService {
 
   actualizaciones() {
     if (this._as.online) {
-      this.storage.get('carteles').then((valores) => {
-        if (!valores) {
-          this.guardarCarteles();
-        }
-      });
+      this.guardarCarteles();
+      this.guardarActividades();
+      this.guardarVideos();
+      this.guardarPatrocinadores();
+      // this.storage.get('carteles').then((valores) => {
+      //   if (!valores) {
+      //     this.guardarCarteles();
+      //   }
+      // });
 
-      this.storage.get('videos').then((valores) => {
-        if (!valores) {
-          this.guardarVideos();
-        }
-      });
+      // this.storage.get('actividades').then((valores) => {
+      //   if (!valores) {
+      //     this.guardarActividades();
+      //   }
+      // });
 
-      this.storage.get('patrocinadores').then((valores) => {
-        if (!valores) {
-          this.guardarPatrocinadores();
-        }
-      });
+      // this.storage.get('videos').then((valores) => {
+      //   if (!valores) {
+      //     this.guardarVideos();
+      //   }
+      // });
+
+      // this.storage.get('patrocinadores').then((valores) => {
+      //   if (!valores) {
+      //     this.guardarPatrocinadores();
+      //   }
+      // });
 
     }
   }
@@ -54,7 +65,7 @@ export class DatosService {
       .then(data => {
         if (data.resultados.length > 0) {
           this.storage.set('carteles', data.resultados);
-          this._as.presentToast("Carteles guardados en dispositivo");
+          //this._as.presentToast("Carteles guardados en dispositivo");
         }
         return promesa;
       })
@@ -80,7 +91,7 @@ export class DatosService {
       .then(data => {
         if (data.resultados.length > 0) {
           this.storage.set('videos', data.resultados);
-          this._as.presentToast("Videos guardados en dispositivo");
+          //this._as.presentToast("Videos guardados en dispositivo");
         }
         return promesa;
       })
@@ -107,6 +118,49 @@ export class DatosService {
   }
 
 
+  //Actividades
+  guardarActividades() {
+    let url = URL_SERVICIOS + "/minutoxminuto.php?getall";
+    let promesa = this.http.get<InterfaceActividades>(url)
+      .toPromise()
+      .then(data => {
+        if (data.dias.length > 0) {
+          this.storage.set('actividades', data);
+         // this._as.presentToast("Actividades save");
+        }
+        return promesa;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+    return promesa;
+  }
+
+  async getActividades() {
+    let promesa = await this.storage.get('actividades').then((valores) => {
+      this.actividades = valores;
+      return valores;
+    });
+    return promesa;
+  }
+  async getActividad(id) {
+    let promesa = await this.storage.get('actividades').then((valores) => {
+      if (valores) {
+        for (const dia of valores.dias) {
+          for (const actividad of dia.actividades) {
+            if (actividad.id == id) {
+              return actividad;
+              break;
+            }
+          }
+        }
+      }
+      // this.actividades = valores;
+      return valores;
+    });
+    return promesa;
+  }
+
   //PATROCINADORES
   guardarPatrocinadores() {
     let url = URL_SERVICIOS + "/patrocinadores.php?getall";
@@ -115,7 +169,7 @@ export class DatosService {
       .then(data => {
         if (data.resultados.length > 0) {
           this.storage.set('patrocinadores', data.resultados);
-          this._as.presentToast("Patrocinadores guardados en dispositivo");
+          //this._as.presentToast("Patrocinadores guardados en dispositivo");
         }
         return promesa;
       })
@@ -137,7 +191,7 @@ export class DatosService {
   guardarFavorito(favorito: IActividad) {
     let existe = false;
     let mensaje = "";
-   let promesa = this.storage.get('favoritos').then((valores) => {
+    let promesa = this.storage.get('favoritos').then((valores) => {
       if (valores) {
         this.favoritos = valores;
 
@@ -154,7 +208,6 @@ export class DatosService {
         this.is_favorito = "ligth";
       } else {
         this.favoritos.push(favorito);
-        console.log("push");
         this.is_favorito = "danger";
         mensaje = "Agregado a favoritos";
       }

@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { NotificacionesPage } from './notificaciones.page';
+import { NotificacionPage } from '../notificacion/notificacion.page';
+import { NotificacionPageModule } from '../notificacion/notificacion.module';
 
 const routes: Routes = [
   {
@@ -15,12 +17,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    NotificacionPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NotificacionPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [NotificacionesPage]
 })
-export class NotificacionesPageModule {}
+export class NotificacionesPageModule { }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { AjustesService } from 'src/app/services/ajustes.service';
 
 @Component({
   selector: 'app-principal',
@@ -10,14 +12,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 export class PrincipalPage {
 	constructor(
 		public navCtrl: NavController,
-		private iab: InAppBrowser
+		private iab: InAppBrowser,
+		private _us:UsuarioService,
+		private _as:AjustesService
 		) {
 
   }
 
 
 	navegarPagina(pagina:any){
-    console.log(pagina);
+		console.log(pagina);
     this.navCtrl.navigateForward('/tabs/principal/'+pagina);
 	}
 

@@ -16,6 +16,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { File } from '@ionic-native/file/ngx';
     IonicStorageModule.forRoot()
   ],
   providers: [
+    OneSignal,
     StatusBar,
     SplashScreen,
     InAppBrowser,

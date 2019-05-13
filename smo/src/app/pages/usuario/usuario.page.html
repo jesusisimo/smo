@@ -1,0 +1,132 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()"
+                  color="danger">
+        <ion-icon slot="icon-only" name="exit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-row class="top-20">
+    
+    <ion-col size="12" text-center>
+      <img src="assets/avatars/{{ usuario.avatar }}" class="img-avatar">
+    </ion-col>
+
+  </ion-row>
+
+
+
+
+  <ion-row>
+    <ion-col text-center>
+      <h3>Seleccione Avatar</h3>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-slides [options]="avatarSlide">
+        <ion-slide *ngFor="let avatar of avatars">
+          <ion-img class="pick-avatar" src="/assets/avatars/{{avatar.img}}"
+            [ngClass]="{'pick-avatar-seleccionado': avatar.seleccionado}" (click)="seleccionarAvatar(avatar)">
+          </ion-img>
+        </ion-slide>
+      </ion-slides>
+    </ion-col>
+  </ion-row>
+
+
+  <form (ngSubmit)="actualizar( fActualizar )" #fActualizar>
+      <ion-row>
+          <ion-col size="6">
+
+          </ion-col>
+          <ion-col size="6" text-right>
+            <span class="leyenda">Marcar para compartir</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Email:</ion-label>
+              <ion-input name="email" type="email" [(ngModel)]="usuario.email" required ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+            <ion-checkbox color="primary" name="email_c"   [(ngModel)]="usuario.email_c"></ion-checkbox>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Password:</ion-label>
+              <ion-input name="password" type="password" [(ngModel)]="usuario.password" required ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Nombre:</ion-label>
+              <ion-input name="nombre" type="text" [(ngModel)]="usuario.nombre" required ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Apellidos:</ion-label>
+              <ion-input name="apellidos" type="text" [(ngModel)]="usuario.apellidos" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Teléfono:</ion-label>
+              <ion-input name="telefono" type="text" [(ngModel)]="usuario.telefono"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+              <ion-checkbox color="primary" name="telefono_c"  [(ngModel)]="usuario.telefono_c"></ion-checkbox>            </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label>Institución:</ion-label>
+              <ion-input name="institucion" type="text" [(ngModel)]="usuario.institucion"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+              <ion-checkbox color="primary" name="institucion_c"   [(ngModel)]="usuario.institucion_c"></ion-checkbox>
+          </ion-col>
+        </ion-row>
+
+
+
+      <ion-row>
+        <ion-col text-center>
+          <ion-button type="submit"
+                      color="primary"
+                      shape="round">
+          Actualizar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    
+  </form>
+
+
+</ion-content>

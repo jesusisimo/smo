@@ -1,16 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartelComponent } from './cartel/cartel.component';
+import { AvatarSelectorComponent } from './avatar-selector/avatar-selector.component';
 
 @NgModule({
-  entryComponents:[
-    CartelComponent
-  ],
   declarations: [
-    CartelComponent
   ],
   exports: [
-    CartelComponent
   ],
   imports: [
     CommonModule

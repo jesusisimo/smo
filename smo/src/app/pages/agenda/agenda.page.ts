@@ -21,7 +21,6 @@ favoritos:IActividad[]=[];
     let promise = this._ds.getFavoritos()
         .then(
           data => {
-            console.log("",data);
             this.favoritos = this._ds.favoritos;
             return data;
           }
