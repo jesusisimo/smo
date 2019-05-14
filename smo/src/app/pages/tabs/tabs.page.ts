@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
 export class TabsPage {
   slideOpts = {
 		effect: 'cube',
-    speed: 700,
+    speed: 1100,
     autoplay:true,
 		loop:true
     };

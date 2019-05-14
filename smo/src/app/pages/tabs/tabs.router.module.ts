@@ -59,7 +59,16 @@ const routes: Routes = [
           },
           {
             path: 'ponentes',
-            loadChildren: '../ponentes/ponentes.module#PonentesPageModule'
+            children: [
+              {
+                path: '',
+                loadChildren: '../ponentes/ponentes.module#PonentesPageModule'
+              },
+              {
+                path: 'ponente/:id',
+                loadChildren: '../ponente/ponente.module#PonentePageModule'
+              },
+            ]
           },
           {
             path: 'bienvenida',
@@ -84,9 +93,18 @@ const routes: Routes = [
           },
           {
             path: 'congresistas',
-            loadChildren: '../congresistas/congresistas.module#CongresistasPageModule',
-            canLoad: [UsuarioGuard]
-          }
+            children: [
+              {
+                path: '',
+                loadChildren: '../congresistas/congresistas.module#CongresistasPageModule',
+                canLoad: [UsuarioGuard],
+              },
+              {
+                path: 'congresista/:id',
+                loadChildren: '../congresista/congresista.module#CongresistaPageModule'
+              },
+            ]
+          },
         ]
       },
       {

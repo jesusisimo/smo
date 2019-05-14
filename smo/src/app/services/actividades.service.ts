@@ -15,6 +15,7 @@ export class ActividadesService {
   dia_actual: string;
   dias: IDia[];
   actividad: IActividad[];
+  actsPonente: IActividad[];
   constructor(
     private http: HttpClient,
     private _as: AjustesService,
@@ -99,24 +100,40 @@ export class ActividadesService {
 
   async buscar(variable: string) {
  
-      let url = await URL_SERVICIOS + "/minutoxminuto.php?search=" + variable;
-      let promesa = this.http.get<InterfaceActividades>(url)
-        .toPromise()
-        .then(data => {
-          this.dias = data.dias;
-          this.dia_actual = data.diaactual;
-          this.pagina = 0;
-          for (let d of this.dias) {
-            this.dia_actual = d.clave_dia;
-            break;
-          }
-          return promesa;
-        })
-        .catch(error => {
-          return Promise.reject(error);
-        });
-    
-  }
+    let url = await URL_SERVICIOS + "/minutoxminuto.php?search=" + variable;
+    let promesa = this.http.get<InterfaceActividades>(url)
+      .toPromise()
+      .then(data => {
+        this.dias = data.dias;
+        this.dia_actual = data.diaactual;
+        this.pagina = 0;
+        for (let d of this.dias) {
+          this.dia_actual = d.clave_dia;
+          break;
+        }
+        return promesa;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  
+}
+
+async actividadesPonente(ponente: string) {
+ 
+  let url = await URL_SERVICIOS + "/actividadesprofesor.php?profesor=" + ponente;
+  let promesa = this.http.get<IDia>(url)
+    .toPromise()
+    .then(data => {
+      console.log(data);
+      this.actsPonente = data.actividades;
+      return promesa;
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+
+}
 
 
 

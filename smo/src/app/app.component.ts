@@ -29,7 +29,7 @@ export class AppComponent {
         this.splashScreen.hide();
         this.noti.configuracionInicial();
         this._ds.actualizaciones();
-      }, 1500)
+      }, 3000)
     });
   }
 }
