@@ -15,25 +15,26 @@ export class CongresistaPage implements OnInit {
   institucion_c=false;
   constructor(
     private activeRoute: ActivatedRoute,
-    private _cs: CongresistasService,
+    public _cs: CongresistasService,
   ) { }
 
-  ngOnInit() {
-    this.id = this.activeRoute.snapshot.paramMap.get('id');
-    this._cs.getDetalles(this.id).then(
+  async ngOnInit() {
+    this.id = await this.activeRoute.snapshot.paramMap.get('id');
+    await this._cs.getDetalles(this.id).then(
       result => {
+        console.log(this._cs.congresista);
+        if(this._cs.congresista.email_c=="1"){
+          this.email_c=true;
+        }
+        if(this._cs.congresista.telefono_c=="1"){
+          this.telefono_c=true;
+        }
+        if(this._cs.congresista.institucion_c=="1"){
+          this.institucion_c=true;
+        }
       }
     );
-    console.log(this._cs.congresista);
-    if(this._cs.congresista.email_c=="1"){
-      this.email_c=true;
-    }
-    if(this._cs.congresista.telefono_c=="1"){
-      this.telefono_c=true;
-    }
-    if(this._cs.congresista.institucion_c=="1"){
-      this.institucion_c=true;
-    }
+   
   }
 
 }

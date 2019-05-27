@@ -9,20 +9,43 @@ var ActividadPage = /** @class */ (function () {
         this._as = _as;
         this._ds = _ds;
         this.id = null;
-        this.actividad = null;
         this.seccion = "1";
     }
     ActividadPage.prototype.ngOnInit = function () {
-        this.id = this.activeRoute.snapshot.paramMap.get('id');
-        this.esFavorito();
-        this._as.getDetalles(this.id).then(function (result) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var _a;
+            var _this = this;
+            return tslib_1.__generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.activeRoute.snapshot.paramMap.get('id')];
+                    case 1:
+                        _a.id = _b.sent();
+                        return [4 /*yield*/, this._as.getDetalles(this.id).then(function (result) {
+                                _this.esFavorito();
+                            })];
+                    case 2:
+                        _b.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     ActividadPage.prototype.guardarFavorito = function (favorito) {
         this._ds.guardarFavorito(favorito);
     };
     ActividadPage.prototype.esFavorito = function () {
-        this._ds.isFavorito(this.id);
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._ds.isFavorito(this.id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     ActividadPage = tslib_1.__decorate([
         Component({

@@ -77,6 +77,7 @@ export class LoginPage implements OnInit {
     if(fLogin.invalid){return false;}
     const valido = await this._us.login(this.loginUser.email, this.loginUser.password);
     if(valido){
+      this._as.presentAlert("Bienvenido");
       this.navCtrl.navigateRoot('/tabs/login/usuario',{animated:true});
     }else{
       this._as.presentAlert("Usuario o contraseña incorrectos");
@@ -90,6 +91,7 @@ export class LoginPage implements OnInit {
     const registrado = await this._us.registro(this.registerUser);
     if(registrado){
       //navegar tabs
+      this._as.presentAlert("Registro exitoso");
       this.navCtrl.navigateRoot('/tabs/login/usuario',{animated:true});
     }
   }

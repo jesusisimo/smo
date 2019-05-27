@@ -2,7 +2,7 @@ import * as tslib_1 from "tslib";
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 var routes = [
-    { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' }
+    { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

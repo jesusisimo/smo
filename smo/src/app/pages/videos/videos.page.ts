@@ -12,7 +12,7 @@ export class VideosPage implements OnInit {
   variable: string = "";
   constructor(
     public modalCtrl: ModalController,
-    private _vs: VideosService,
+    public _vs: VideosService,
     private iab: InAppBrowser
   ) { }
 

@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NotificacionesPage } from './notificaciones.page';
+import { NotificacionPage } from '../notificacion/notificacion.page';
+import { NotificacionPageModule } from '../notificacion/notificacion.module';
 var routes = [
     {
         path: '',
@@ -16,10 +18,14 @@ var NotificacionesPageModule = /** @class */ (function () {
     }
     NotificacionesPageModule = tslib_1.__decorate([
         NgModule({
+            entryComponents: [
+                NotificacionPage
+            ],
             imports: [
                 CommonModule,
                 FormsModule,
                 IonicModule,
+                NotificacionPageModule,
                 RouterModule.forChild(routes)
             ],
             declarations: [NotificacionesPage]

@@ -20,6 +20,10 @@ var ProgramaPage = /** @class */ (function () {
     ProgramaPage.prototype.verDetalles = function (id) {
         this.navCtrl.navigateForward("/tabs/principal/programa/actividad/" + id);
     };
+    ProgramaPage.prototype.buscar = function (texto) {
+        this.variable = texto.target.value;
+        this._as.buscar(this.variable);
+    };
     ProgramaPage = tslib_1.__decorate([
         Component({
             selector: 'app-programa',

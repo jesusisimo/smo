@@ -2,6 +2,7 @@ import * as tslib_1 from "tslib";
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { UsuarioGuard } from 'src/app/guards/usuario.guard';
 var routes = [
     {
         path: 'tabs',
@@ -58,7 +59,16 @@ var routes = [
                     },
                     {
                         path: 'ponentes',
-                        loadChildren: '../ponentes/ponentes.module#PonentesPageModule'
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: '../ponentes/ponentes.module#PonentesPageModule'
+                            },
+                            {
+                                path: 'ponente/:id',
+                                loadChildren: '../ponente/ponente.module#PonentePageModule'
+                            },
+                        ]
                     },
                     {
                         path: 'bienvenida',
@@ -82,17 +92,32 @@ var routes = [
                     },
                     {
                         path: 'congresistas',
-                        loadChildren: '../congresistas/congresistas.module#CongresistasPageModule'
-                    }
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: '../congresistas/congresistas.module#CongresistasPageModule',
+                                canLoad: [UsuarioGuard],
+                            },
+                            {
+                                path: 'congresista/:id',
+                                loadChildren: '../congresista/congresista.module#CongresistaPageModule'
+                            },
+                        ]
+                    },
                 ]
             },
             {
-                path: 'tab3',
+                path: 'login',
                 children: [
                     {
                         path: '',
-                        loadChildren: '../tab3/tab3.module#Tab3PageModule'
-                    }
+                        loadChildren: '../login/login.module#LoginPageModule',
+                    },
+                    {
+                        path: 'usuario',
+                        loadChildren: '../usuario/usuario.module#UsuarioPageModule',
+                        canLoad: [UsuarioGuard]
+                    },
                 ]
             },
             {

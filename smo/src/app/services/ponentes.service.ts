@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AjustesService } from './ajustes.service';
 import { URL_SERVICIOS } from "../config/url.servicios";
 import { HttpClient } from '@angular/common/http';
+import { DatosService } from './datos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class PonentesService {
   ponente: IPonente;
   constructor(
     private http: HttpClient,
-    private _as:AjustesService) { }
+    private _as:AjustesService,
+    private _ds: DatosService
+    ) { }
 
 
 
@@ -36,11 +39,22 @@ export class PonentesService {
     return promesa;
   }
 
-  cargar_todos() {
-
-      this._as.presentLoading("Cargando...");
+  async cargar_todos() {
+    if (!this._as.online) {
+      this._as.presentLoading("Cargando...", 3);
+      let promise =  this._ds.getProfesores()
+        .then(
+          data => {
+            this.ponentes = data;
+            this.pagina = 100;
+            this._as.loading.dismiss();
+            return data;
+          }
+        );
+    } else {
+      this._as.presentLoading("Cargando...",1);
       let url = URL_SERVICIOS + "/profesores.php?todos&pagina=" + this.pagina;
-      let promesa = this.http.get<InterfacePonentes>(url)
+      let promesa = await this.http.get<InterfacePonentes>(url)
         .toPromise()
         .then(data => {
           this.ponentes = data.profesores;
@@ -53,7 +67,7 @@ export class PonentesService {
           return Promise.reject(error);
         });
       return promesa;
-    
+      }
   }
 
 
@@ -83,7 +97,25 @@ export class PonentesService {
 
 
   async buscar(variable: string) {
+    if (!this._as.online) {
+      variable=variable.toUpperCase();
+      let promise = await this._ds.getProfesores()
+        .then(
+          data => {
+            this.ponentes=[];
+            let list: IPonente[]=[];
+            list = data;
+            list.forEach(
+              profesor => {
+                if(profesor.nombre.toUpperCase().indexOf(variable)>=0 ){
+                  this.ponentes.push(profesor);
+                }
+            });
+            return promise;
+          }
+        );
 
+    } else {
       let url = URL_SERVICIOS + "/profesores.php?search=" + variable;
       let promesa = await this.http.get<InterfacePonentes>(url)
         .toPromise()
@@ -98,7 +130,7 @@ export class PonentesService {
           return Promise.reject(error);
         });
       return promesa;
-    
+    }
   }
 
 

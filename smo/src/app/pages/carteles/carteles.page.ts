@@ -12,7 +12,7 @@ export class CartelesPage implements OnInit {
   variable: string = "";
   constructor(
     public modalCtrl: ModalController,
-    private _cs: CartelesService,
+    public _cs: CartelesService,
     private iab: InAppBrowser
   ) { }
 

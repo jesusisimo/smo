@@ -11,27 +11,27 @@ import { DatosService } from '../../services/datos.service';
 })
 export class ActividadPage implements OnInit {
   id = null;
-  actividad: IActividad[] = null;
   seccion = "1";
   constructor(
     private activeRoute: ActivatedRoute,
-    private _as: ActividadesService,
-    private _ds: DatosService
+    public _as: ActividadesService,
+    public _ds: DatosService
   ) { }
 
-  ngOnInit() {
-
-    this.id = this.activeRoute.snapshot.paramMap.get('id');
-    this.esFavorito();
-    this._as.getDetalles(this.id).then(
+  async ngOnInit() {
+    this.id = await this.activeRoute.snapshot.paramMap.get('id');
+   
+    await this._as.getDetalles(this.id).then(
       result => {
+        this.esFavorito();
       }
     );
+    
   }
-  guardarFavorito(favorito:any) {
+  guardarFavorito(favorito: any) {
     this._ds.guardarFavorito(favorito);
   }
-  esFavorito(){
-    this._ds.isFavorito(this.id);
+ async esFavorito() {
+    await this._ds.isFavorito(this.id);
   }
 }

@@ -13,7 +13,7 @@ export class PatrocinadoresPage implements OnInit {
 
   constructor(
     public modalCtrl: ModalController,
-    private _ps: PatrocinadoresService,
+    public _ps: PatrocinadoresService,
     private iab: InAppBrowser
   ) { }
 

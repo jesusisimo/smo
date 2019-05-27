@@ -14,7 +14,7 @@ export class ProgramaPage implements OnInit {
   constructor(
     private router: Router,
     public navCtrl: NavController,
-    private _as: ActividadesService,
+    public _as: ActividadesService,
     private iab: InAppBrowser
   ) { 
   }

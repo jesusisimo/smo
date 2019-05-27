@@ -15,28 +15,32 @@ var DatosService = /** @class */ (function () {
         this.favoritos = [];
     }
     DatosService.prototype.actualizaciones = function () {
-        var _this = this;
         if (this._as.online) {
-            this.storage.get('carteles').then(function (valores) {
-                if (!valores) {
-                    _this.guardarCarteles();
-                }
-            });
-            this.storage.get('actividades').then(function (valores) {
-                //if (!valores) {
-                _this.guardarActividades();
-                //}
-            });
-            this.storage.get('videos').then(function (valores) {
-                if (!valores) {
-                    _this.guardarVideos();
-                }
-            });
-            this.storage.get('patrocinadores').then(function (valores) {
-                if (!valores) {
-                    _this.guardarPatrocinadores();
-                }
-            });
+            this.guardarCarteles();
+            this.guardarActividades();
+            this.guardarVideos();
+            this.guardarPatrocinadores();
+            this.guardarProfesores();
+            // this.storage.get('carteles').then((valores) => {
+            //   if (!valores) {
+            //     this.guardarCarteles();
+            //   }
+            // });
+            // this.storage.get('actividades').then((valores) => {
+            //   if (!valores) {
+            //     this.guardarActividades();
+            //   }
+            // });
+            // this.storage.get('videos').then((valores) => {
+            //   if (!valores) {
+            //     this.guardarVideos();
+            //   }
+            // });
+            // this.storage.get('patrocinadores').then((valores) => {
+            //   if (!valores) {
+            //     this.guardarPatrocinadores();
+            //   }
+            // });
         }
     };
     //CARTELES
@@ -48,7 +52,7 @@ var DatosService = /** @class */ (function () {
             .then(function (data) {
             if (data.resultados.length > 0) {
                 _this.storage.set('carteles', data.resultados);
-                _this._as.presentToast("Carteles guardados en dispositivo");
+                //this._as.presentToast("Carteles guardados en dispositivo");
             }
             return promesa;
         })
@@ -74,6 +78,40 @@ var DatosService = /** @class */ (function () {
             });
         });
     };
+    //PROFESORES
+    DatosService.prototype.getProfesores = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var promesa;
+            var _this = this;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.storage.get('profesores').then(function (valores) {
+                            _this.profesores = valores;
+                            return valores;
+                        })];
+                    case 1:
+                        promesa = _a.sent();
+                        return [2 /*return*/, promesa];
+                }
+            });
+        });
+    };
+    DatosService.prototype.guardarProfesores = function () {
+        var _this = this;
+        var url = URL_SERVICIOS + "/profesores.php?getall";
+        var promesa = this.http.get(url)
+            .toPromise()
+            .then(function (data) {
+            if (data.profesores.length > 0) {
+                _this.storage.set('profesores', data.profesores);
+            }
+            return promesa;
+        })
+            .catch(function (error) {
+            return Promise.reject(error);
+        });
+        return promesa;
+    };
     //VIDEOS
     DatosService.prototype.guardarVideos = function () {
         var _this = this;
@@ -83,7 +121,7 @@ var DatosService = /** @class */ (function () {
             .then(function (data) {
             if (data.resultados.length > 0) {
                 _this.storage.set('videos', data.resultados);
-                _this._as.presentToast("Videos guardados en dispositivo");
+                //this._as.presentToast("Videos guardados en dispositivo");
             }
             return promesa;
         })
@@ -135,7 +173,7 @@ var DatosService = /** @class */ (function () {
             .then(function (data) {
             if (data.dias.length > 0) {
                 _this.storage.set('actividades', data);
-                _this._as.presentToast("Actividades save");
+                // this._as.presentToast("Actividades save");
             }
             return promesa;
         })
@@ -198,7 +236,7 @@ var DatosService = /** @class */ (function () {
             .then(function (data) {
             if (data.resultados.length > 0) {
                 _this.storage.set('patrocinadores', data.resultados);
-                _this._as.presentToast("Patrocinadores guardados en dispositivo");
+                //this._as.presentToast("Patrocinadores guardados en dispositivo");
             }
             return promesa;
         })
@@ -226,55 +264,67 @@ var DatosService = /** @class */ (function () {
     };
     //PATROCINADORES
     DatosService.prototype.guardarFavorito = function (favorito) {
-        var _this = this;
-        var existe = false;
-        var mensaje = "";
-        var promesa = this.storage.get('favoritos').then(function (valores) {
-            if (valores) {
-                _this.favoritos = valores;
-                for (var _i = 0, _a = _this.favoritos; _i < _a.length; _i++) {
-                    var act = _a[_i];
-                    if (act.id == favorito.id) {
-                        existe = true;
-                        break;
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var existe, mensaje, promesa;
+            var _this = this;
+            return tslib_1.__generator(this, function (_a) {
+                existe = false;
+                mensaje = "";
+                promesa = this.storage.get('favoritos').then(function (valores) {
+                    if (valores) {
+                        _this.favoritos = valores;
+                        for (var _i = 0, _a = _this.favoritos; _i < _a.length; _i++) {
+                            var act = _a[_i];
+                            if (act.id == favorito.id) {
+                                existe = true;
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-            if (existe) {
-                _this.favoritos = _this.favoritos.filter(function (act) { return act.id !== favorito.id; });
-                mensaje = "Borrado de favoritos";
-                _this.is_favorito = "ligth";
-            }
-            else {
-                _this.favoritos.push(favorito);
-                console.log("push");
-                _this.is_favorito = "danger";
-                mensaje = "Agregado a favoritos";
-            }
-            _this.storage.set('favoritos', _this.favoritos);
-            _this._as.presentToast(mensaje);
-            return promesa;
+                    if (existe) {
+                        _this.favoritos = _this.favoritos.filter(function (act) { return act.id !== favorito.id; });
+                        mensaje = "Borrado de favoritos";
+                        _this.is_favorito = "ligth";
+                    }
+                    else {
+                        _this.favoritos.push(favorito);
+                        _this.is_favorito = "danger";
+                        mensaje = "Agregado a favoritos";
+                    }
+                    _this.storage.set('favoritos', _this.favoritos).then(function (result) {
+                        _this._as.presentToast(mensaje);
+                        return promesa;
+                    });
+                });
+                return [2 /*return*/, promesa];
+            });
         });
-        return promesa;
     };
     DatosService.prototype.isFavorito = function (id) {
-        var _this = this;
-        var existe = false;
-        var mensaje = "";
-        this.storage.get('favoritos').then(function (valores) {
-            for (var _i = 0, valores_1 = valores; _i < valores_1.length; _i++) {
-                var act = valores_1[_i];
-                if (act.id == id) {
-                    existe = true;
-                    break;
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var mensaje;
+            var _this = this;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        mensaje = "";
+                        this.is_favorito = "ligth";
+                        console.log("BUSCANDO EN FAVORITOS");
+                        return [4 /*yield*/, this.storage.get('favoritos').then(function (valores) {
+                                for (var _i = 0, valores_1 = valores; _i < valores_1.length; _i++) {
+                                    var act = valores_1[_i];
+                                    if (act.id == id) {
+                                        console.log("EXISTE");
+                                        _this.is_favorito = "danger";
+                                        break;
+                                    }
+                                }
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
-            }
-            if (existe) {
-                _this.is_favorito = "danger";
-            }
-            else {
-                _this.is_favorito = "ligth";
-            }
+            });
         });
     };
     DatosService = tslib_1.__decorate([

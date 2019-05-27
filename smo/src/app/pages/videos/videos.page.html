@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content ion-padding="ion-padding">
-  <ion-refresher  [disabled]="refrescando"  (ionRefresh)="recargar($event)">
+  <ion-refresher    (ionRefresh)="recargar($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
     <ion-list>
@@ -25,7 +25,7 @@
           </ion-label>
         </ion-item>
       </ion-list>
-      <ion-infinite-scroll [disabled]="scrolling" (ionInfinite)="siguiente_pagina($event)">
+      <ion-infinite-scroll  (ionInfinite)="siguiente_pagina($event)">
           <ion-infinite-scroll-content loadingText="Cargando mas información…"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
 </ion-content>

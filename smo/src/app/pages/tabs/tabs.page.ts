@@ -12,7 +12,7 @@ export class TabsPage {
   slideOpts = {
 		effect: 'cube',
     speed: 1100,
-    autoplay:true,
+    autoplay:false,
 		loop:true
     };
   constructor(

@@ -17,7 +17,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   declarations: [AppComponent, CartelComponent],
@@ -38,6 +39,9 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     PhotoViewer,
     File,
     Network,
+    FileOpener,
+    FileTransfer,
+    DocumentViewer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

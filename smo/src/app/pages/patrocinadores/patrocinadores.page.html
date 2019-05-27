@@ -13,43 +13,33 @@
 </ion-header>
 
 <ion-content ion-padding="ion-padding">
-  <ion-refresher [disabled]="refrescando" (ionRefresh)="recargar($event)">
+  <ion-refresher  (ionRefresh)="recargar($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   
   <ion-list>
     <ion-item ion-item *ngFor="let patrocinador of _ps.patrocinadores">
-      
-        <!-- <ion-card color="light">
-            <img ion-padding src="{{ patrocinador.logo }}">
-            <ion-card-header>
-              <ion-card-title text-center>{{ patrocinador.patrocinador }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content text-justify>
-                {{ patrocinador.descripcion }}
-            </ion-card-content>
-          </ion-card> -->
-          
-
           <ion-card color="light">
               <img src="{{ patrocinador.logo }}">
-              <ion-item>
-                <ion-card-title>{{ patrocinador.patrocinador }}</ion-card-title>
-                <ion-button  slot="end" color="primary" (click)="abrirWeb(patrocinador.pagina)">
-                    <ion-icon name="link" slot="start"></ion-icon>
-                    Visitar página
-                </ion-button>
-              </ion-item>
+              
+                <h3 text-center [innerHTML]="patrocinador.patrocinador"></h3>
+            
             
               <ion-card-content text-justify>
-                  {{ patrocinador.descripcion }}
+                  <p text-justify [innerHTML]="patrocinador.descripcion"></p>
               </ion-card-content>
+              <h5 text-right>
+              <ion-button text-center color="primary" (click)="abrirWeb(patrocinador.pagina)" *ngIf="patrocinador.pagina!=''">
+                  <ion-icon name="link" ></ion-icon>
+                  Visitar página
+              </ion-button>
+            </h5>
             </ion-card>
     </ion-item>
 
 
   </ion-list>
-  <ion-infinite-scroll [disabled]="scrolling" (ionInfinite)="siguiente_pagina($event)">
+  <ion-infinite-scroll  (ionInfinite)="siguiente_pagina($event)">
     <ion-infinite-scroll-content loadingText="Cargando mas información…"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

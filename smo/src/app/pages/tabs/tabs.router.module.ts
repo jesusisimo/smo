@@ -88,8 +88,7 @@ const routes: Routes = [
           },
           {
             path: 'agenda',
-            loadChildren: '../agenda/agenda.module#AgendaPageModule',
-            canLoad: [UsuarioGuard]
+            loadChildren: '../agenda/agenda.module#AgendaPageModule'
           },
           {
             path: 'congresistas',

@@ -11,7 +11,7 @@ export class CongresistasPage implements OnInit {
   variable: string = "";
   constructor(
     public modalCtrl: ModalController,
-    private _cs: CongresistasService,
+    public _cs: CongresistasService,
     private navCtrl:NavController
       ) { }
 

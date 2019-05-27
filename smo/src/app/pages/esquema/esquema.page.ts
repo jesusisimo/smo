@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
-
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
 @Component({
   selector: 'app-esquema',
   templateUrl: './esquema.page.html',
   styleUrls: ['./esquema.page.scss'],
 })
 export class EsquemaPage implements OnInit {
-  slideOpts = {
-    zoom: true
-      };
-    
-   options: DocumentViewerOptions = {
-    title: 'My PDF'
-  }
-  constructor(private document: DocumentViewer) { }
+
+  constructor(
+    private photoViewer: PhotoViewer,
+    private file: File
+  ) { }
 
   
   
 
   ngOnInit() {
-    this.document.viewDocument('../../assets/25-May-2019-Sábado_Saturday.pdf', 'application/pdf', this.options);
   }
+  viewPhoto(img:string) {
+    let imageName = img;    
+    this.photoViewer.show(this.file.applicationDirectory + "www/assets/img/esquemas/"+imageName, "Esquema");
 
+  }
+ 
 }

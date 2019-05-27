@@ -1,18 +1,17 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
 var EsquemaPage = /** @class */ (function () {
-    function EsquemaPage(document) {
-        this.document = document;
-        this.slideOpts = {
-            zoom: true
-        };
-        this.options = {
-            title: 'My PDF'
-        };
+    function EsquemaPage(photoViewer, file) {
+        this.photoViewer = photoViewer;
+        this.file = file;
     }
     EsquemaPage.prototype.ngOnInit = function () {
-        this.document.viewDocument('../../assets/25-May-2019-Sábado_Saturday.pdf', 'application/pdf', this.options);
+    };
+    EsquemaPage.prototype.viewPhoto = function (img) {
+        var imageName = img;
+        this.photoViewer.show(this.file.applicationDirectory + "www/assets/img/esquemas/" + imageName, "Esquema");
     };
     EsquemaPage = tslib_1.__decorate([
         Component({
@@ -20,7 +19,8 @@ var EsquemaPage = /** @class */ (function () {
             templateUrl: './esquema.page.html',
             styleUrls: ['./esquema.page.scss'],
         }),
-        tslib_1.__metadata("design:paramtypes", [DocumentViewer])
+        tslib_1.__metadata("design:paramtypes", [PhotoViewer,
+            File])
     ], EsquemaPage);
     return EsquemaPage;
 }());

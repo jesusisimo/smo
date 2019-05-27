@@ -12,7 +12,7 @@ export class PonentesPage implements OnInit {
   variable: string = "";
   constructor(
     public modalCtrl:ModalController,
-    private _ps: PonentesService,
+    public _ps: PonentesService,
     private navCtrl:NavController
       ) { }
 

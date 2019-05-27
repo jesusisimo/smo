@@ -12,7 +12,7 @@ export class PonentePage implements OnInit {
   id = null;
   actividades: IActividad[] = null;
   constructor(
-    private _as: ActividadesService,
+    public _as: ActividadesService,
     private activeRoute: ActivatedRoute,
     private navCtrl: NavController
   ) { }

@@ -1,1 +1,1 @@
-export const URL_SERVICIOS="http://wsbrb-services.com/smo/servicios";
+export const URL_SERVICIOS="https://wsbrb-services.com/smo/servicios";

@@ -13,6 +13,7 @@ import { IPatrocinador } from '../interfaces/patrocinadores';
 })
 export class DatosService {
   carteles: ICartel[];
+  profesores: IPonente[];
   actividad: IActividad[] = [];
   is_favorito = "ligth";
   videos: IVideo[];
@@ -31,6 +32,7 @@ export class DatosService {
       this.guardarActividades();
       this.guardarVideos();
       this.guardarPatrocinadores();
+      this.guardarProfesores();
       // this.storage.get('carteles').then((valores) => {
       //   if (!valores) {
       //     this.guardarCarteles();
@@ -83,6 +85,29 @@ export class DatosService {
     return promesa;
   }
 
+  //PROFESORES
+  async getProfesores() {
+    let promesa = await this.storage.get('profesores').then((valores) => {
+      this.profesores = valores;
+      return valores;
+    });
+    return promesa;
+  }
+  guardarProfesores() {
+    let url = URL_SERVICIOS + "/profesores.php?getall";
+    let promesa = this.http.get<InterfacePonentes>(url)
+      .toPromise()
+      .then(data => {
+        if (data.profesores.length > 0) {
+          this.storage.set('profesores', data.profesores);
+        }
+        return promesa;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+    return promesa;
+  }
   //VIDEOS
   guardarVideos() {
     let url = URL_SERVICIOS + "/videos.php?getall";
@@ -112,6 +137,7 @@ export class DatosService {
   async getFavoritos() {
     let promesa = await this.storage.get('favoritos').then((valores) => {
       this.favoritos = valores;
+
       return promesa;
     });
     return promesa;
@@ -126,7 +152,7 @@ export class DatosService {
       .then(data => {
         if (data.dias.length > 0) {
           this.storage.set('actividades', data);
-         // this._as.presentToast("Actividades save");
+          // this._as.presentToast("Actividades save");
         }
         return promesa;
       })
@@ -143,6 +169,7 @@ export class DatosService {
     });
     return promesa;
   }
+
   async getActividad(id) {
     let promesa = await this.storage.get('actividades').then((valores) => {
       if (valores) {
@@ -188,7 +215,7 @@ export class DatosService {
   }
 
   //PATROCINADORES
-  guardarFavorito(favorito: IActividad) {
+  async guardarFavorito(favorito: IActividad) {
     let existe = false;
     let mensaje = "";
     let promesa = this.storage.get('favoritos').then((valores) => {
@@ -212,9 +239,13 @@ export class DatosService {
         mensaje = "Agregado a favoritos";
       }
 
-      this.storage.set('favoritos', this.favoritos);
-      this._as.presentToast(mensaje);
-      return promesa;
+      this.storage.set('favoritos', this.favoritos).then(
+        result => {
+          this._as.presentToast(mensaje);
+          return promesa;
+        }
+      );
+
     });
     return promesa;
   }
@@ -222,21 +253,19 @@ export class DatosService {
 
 
 
-  isFavorito(id: any) {
-    let existe = false;
+  async isFavorito(id: any) {
     let mensaje = "";
-    this.storage.get('favoritos').then((valores) => {
+    this.is_favorito = "ligth";
+    console.log("BUSCANDO EN FAVORITOS");
+    await this.storage.get('favoritos').then((valores) => {
       for (const act of valores) {
         if (act.id == id) {
-          existe = true;
+          console.log("EXISTE");
+          this.is_favorito = "danger";
           break;
         }
       }
-      if (existe) {
-        this.is_favorito = "danger";
-      } else {
-        this.is_favorito = "ligth";
-      }
+      
     });
 
   }

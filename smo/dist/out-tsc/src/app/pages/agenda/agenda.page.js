@@ -15,7 +15,6 @@ var AgendaPage = /** @class */ (function () {
         var _this = this;
         var promise = this._ds.getFavoritos()
             .then(function (data) {
-            console.log("", data);
             _this.favoritos = _this._ds.favoritos;
             return data;
         });

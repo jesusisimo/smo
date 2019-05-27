@@ -51,7 +51,8 @@ export class AjustesService {
     if (this.platform.is('cordova')) {
       if (this.network.type === undefined || this.network.type === null || this.network.type === 'unknown') {
         this.online = false;
-        //this.presentToast('No hay conexion a internet');
+        console.log('No hay conexion a internet');
+        this.presentToast('No hay conexion a internet');
       } else {
         this.online = true;
       }
@@ -60,7 +61,8 @@ export class AjustesService {
     }
 
     let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      //this.presentToast('Se perdio la conexion a internet');
+      console.log('No hay conexion a internet');
+      this.presentToast('Se perdio la conexion a internet');
       this.online = false;
     });
     let connectSubscription = this.network.onConnect().subscribe(() => {

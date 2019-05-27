@@ -91,7 +91,7 @@ export class UsuarioService {
   async tienePermiso(): Promise<boolean> {
     await this.cargarToken();
     if (!this.token) {
-      this._as.presentAlert("Regístrate para ver esta sección");
+      //this._as.presentAlert("Ir a mi perfil para registrarme");
       return Promise.resolve(false);
     } else {
       console.log("Si existe token");

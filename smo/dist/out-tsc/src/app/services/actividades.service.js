@@ -13,7 +13,7 @@ var ActividadesService = /** @class */ (function () {
         this.pagina = 0;
         this.dia_actual = "";
         this.dias = [];
-        this.actividad = [];
+        this.actividad = null;
     }
     ActividadesService.prototype.cargar_todos = function () {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
@@ -84,18 +84,78 @@ var ActividadesService = /** @class */ (function () {
                     case 1: return [4 /*yield*/, URL_SERVICIOS];
                     case 2:
                         url = (_a.sent()) + "/actividad.php?id=" + id;
-                        promesa_4 = this.http.get(url)
+                        return [4 /*yield*/, this.http.get(url)
+                                .toPromise()
+                                .then(function (data) {
+                                _this.actividad = data[0];
+                                _this._as.loading.dismiss();
+                                return promesa_4;
+                            })
+                                .catch(function (error) {
+                                _this._as.loading.dismiss();
+                                return Promise.reject(error);
+                            })];
+                    case 3:
+                        promesa_4 = _a.sent();
+                        return [2 /*return*/, promesa_4];
+                }
+            });
+        });
+    };
+    ActividadesService.prototype.buscar = function (variable) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var url, promesa;
+            var _this = this;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, URL_SERVICIOS];
+                    case 1:
+                        url = (_a.sent()) + "/minutoxminuto.php?search=" + variable;
+                        promesa = this.http.get(url)
                             .toPromise()
                             .then(function (data) {
-                            _this.actividad = data.actividades;
-                            _this._as.loading.dismiss();
-                            return promesa_4;
+                            _this.dias = data.dias;
+                            _this.dia_actual = data.diaactual;
+                            _this.pagina = 0;
+                            for (var _i = 0, _a = _this.dias; _i < _a.length; _i++) {
+                                var d = _a[_i];
+                                _this.dia_actual = d.clave_dia;
+                                break;
+                            }
+                            return promesa;
                         })
                             .catch(function (error) {
-                            _this._as.loading.dismiss();
                             return Promise.reject(error);
                         });
-                        return [2 /*return*/, promesa_4];
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ActividadesService.prototype.actividadesPonente = function (ponente) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var url, promesa_5;
+            var _this = this;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!this._as.online) return [3 /*break*/, 1];
+                        return [3 /*break*/, 3];
+                    case 1: return [4 /*yield*/, URL_SERVICIOS];
+                    case 2:
+                        url = (_a.sent()) + "/actividadesprofesor.php?profesor=" + ponente;
+                        promesa_5 = this.http.get(url)
+                            .toPromise()
+                            .then(function (data) {
+                            console.log(data);
+                            _this.actsPonente = data.actividades;
+                            return promesa_5;
+                        })
+                            .catch(function (error) {
+                            return Promise.reject(error);
+                        });
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
                 }
             });
         });

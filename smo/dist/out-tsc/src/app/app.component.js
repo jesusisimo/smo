@@ -4,12 +4,14 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DatosService } from './services/datos.service';
+import { PushService } from './services/push.service';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(platform, splashScreen, statusBar, _ds) {
+    function AppComponent(platform, splashScreen, statusBar, _ds, noti) {
         this.platform = platform;
         this.splashScreen = splashScreen;
         this.statusBar = statusBar;
         this._ds = _ds;
+        this.noti = noti;
         this.initializeApp();
     }
     AppComponent.prototype.initializeApp = function () {
@@ -19,8 +21,9 @@ var AppComponent = /** @class */ (function () {
             ///      this.statusBar.styleLightContent(); color light
             setTimeout(function () {
                 _this.splashScreen.hide();
+                _this.noti.configuracionInicial();
                 _this._ds.actualizaciones();
-            }, 1500);
+            }, 3000);
         });
     };
     AppComponent = tslib_1.__decorate([
@@ -31,7 +34,8 @@ var AppComponent = /** @class */ (function () {
         tslib_1.__metadata("design:paramtypes", [Platform,
             SplashScreen,
             StatusBar,
-            DatosService])
+            DatosService,
+            PushService])
     ], AppComponent);
     return AppComponent;
 }());
